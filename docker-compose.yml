@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend # Build the container using the Dockerfile
+    ports:
+      - "3000:3000" # Map port 3000 of the container to port 3000 on the host
+    volumes:
+      - ./backend:/app # Mount the backend code into the container for live updates
