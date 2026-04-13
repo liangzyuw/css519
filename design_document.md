@@ -42,17 +42,8 @@ The platform supports:
 - Textbook(id, title, author)  
 - Chapter(id, textbook_id, title, order_index)  
 - Section(id, chapter_id, title, content)  
-- Problem(id, section_id, question_text, difficulty_level)  
-- Annotation(
-  id, 
-  content_id, 
-  content_type, -- section | problem, 
-  author_id, 
-  type, 
-  body, 
-  visibility, -- always | on_request 
-  created_at 
-)
+- Problem(id, section_id, question_text)  
+- Annotation(id, content_id, content_type, -- section | problem, author_id, body, visibility, -- always | on_request created_at)
 
 #### User & Authentication Service
 - User(id, name, email, role, created_at)  
@@ -62,12 +53,72 @@ The platform supports:
 #### APIs:  
 - POST /courses  
 - POST /assignments  
-- GET /courses/{id}/content  
+- GET /courses/{id}/content 
+- GET /chapters/{chapter_id}/sections
+- POST /sections/{section_id}/problems
 
-#### Student Interaction Service
+##### Educator end:
+- POST /annotations (on section)  
+{
+  "content_id": "section_123",
+  "content_type": "section",
+  "author_id": "user_1",
+  "body": "This definition is important!",
+  "visibility": "always"
+}
+
+- POST /annotations (on problem)  
+{
+  "content_id": "problem_456",
+  "content_type": "problem",
+  "author_id": "user_2",
+  "body": "Hint: Think about additive identity.",
+  "visibility": "on_request"
+}
+
+- GET /annotations?content_type=problem&content_id=problem_456  
+- GET /annotations/request?content_id=problem_456  
+
+Course management:
+- POST /courses  
+{
+  "title": "Linear Algebra 101",
+  "instructor_id": "user_10"
+}
+- GET /courses
+- GET /api/courses/{course_id}  
+
+##### Authentication:
+- POST /users  
+{
+  "name": "Alice",
+  "email": "alice@example.com",
+  "role": "student"
+}
+
+- POST /auth/login  
+{
+  "email": "alice@example.com",
+  "password": "securepassword"
+}
+
+- (Get current user) GET /api/me  
+Authorization: Bearer <token>
+
+##### Enrollment:
+
+- POST /api/enrollments  
+{
+  "user_id": "user_1",
+  "course_id": "course_5"
+}
+- GET /api/courses/{course_id}/students  
+- GET /api/users/{user_id}/courses  
+
+<!-- #### Student Interaction Service
 - Highlight(id, user_id, section_id, start_offset, end_offset)  
 - Bookmark(id, user_id, content_id)  
-- HintUsage(id, user_id, annotation_id, timestamp)  
+- HintUsage(id, user_id, annotation_id, timestamp)   -->
 
 ## 4. Frontend Design
 
