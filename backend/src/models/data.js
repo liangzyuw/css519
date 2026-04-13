@@ -31,7 +31,24 @@ const problems = [
   },
 ];
 
-const annotations = [];
+const annotations = [
+  // {
+  //   id: "ann_1",
+  //   content_id: "sec1",
+  //   content_type: "section",
+  //   author_id: "user_1",
+  //   body: "This is a test annotation",
+  //   visibility: "always"
+  // }
+];
+
+// instantly make an annotation for testing purposes so we have something on frontend when load the page
+annotations.push({
+  id: "test1",
+  content_id: "sec1",
+  content_type: "section",
+  body: "Hello from backend!",
+});
 
 module.exports = {
   textbooks,

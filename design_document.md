@@ -74,7 +74,27 @@ The platform supports:
   "author_id": "user_2",
   "body": "Hint: Think about additive identity.",
   "visibility": "on_request"
-}
+}  
+
+Any annotation created must match content_id and content_type with its location.  
+
+To test creating an annotation on POSTMAN,  
+
+POST: http://localhost:3000/api/annotations
+body:   
+{
+  "content_id": "sec1",
+  "content_type": "section",
+  "author_id": "user_1",
+  "body": "This is a test annotation from Postman",
+  "visibility": "always"
+}  
+
+Then check with:   
+
+GET: http://localhost:3000/api/annotations?content_type=section&content_id=sec1  
+
+It should show the same content in the body.   
 
 - GET /annotations?content_type=problem&content_id=problem_456  
 - GET /annotations/request?content_id=problem_456  

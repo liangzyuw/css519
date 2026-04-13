@@ -1,5 +1,11 @@
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
+
+// Browsers block cross-origin requests unless backend explicitly allows it via:
+app.use(cors());
+// since backend is running on port 3000 and frontend on port 5173, we need to allow CORS requests from frontend
 
 // middleware to parse JSON request bodies
 app.use(express.json());
