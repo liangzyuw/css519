@@ -1,4 +1,5 @@
-FROM node:18
+# FROM node:18
+FROM node:22
 # Start from a base image that already has Node.js installed
 WORKDIR /app
 # Inside the container, everything happens in /app

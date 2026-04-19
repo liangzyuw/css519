@@ -1,9 +1,53 @@
-version: "3.8"
-
 services:
   backend:
-    build: ./backend # Build the container using the Dockerfile
+    build: ./backend
     ports:
-      - "3000:3000" # Map port 3000 of the container to port 3000 on the host
-    volumes:
-      - ./backend:/app # Mount the backend code into the container for live updates
+      - "3000:3000"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  dashboard:
+    build: ./dashboard
+    ports:
+      - "5001:5000"
+      - "4001:4000"
+
+
+# version: "3.8"
+
+# services:
+#   backend:
+#     build: ./backend # Build the container using the Dockerfile
+#     ports:
+#       - "3000:3000" # Map port 3000 of the container to port 3000 on the host
+#     volumes:
+#       - ./backend:/app # Mount the backend code into the container for live updates
+
+
+
+
+# version: "3.8"
+
+# services:
+#   backend:
+#     build: ./backend # Build the container using the Dockerfile
+#     ports:
+#       - "3000:3000" # Map port 3000 of the container to port 3000 on the host
+#     # volumes:
+#     #   - ./backend:/app # Mount the backend code into the container for live updates
+
+#   frontend:
+#     build: ./frontend # Build the container using the Dockerfile
+#     ports:
+#       - "5173:5173"
+
+#   dashboard:
+#     build: ./dashboard
+#     ports:
+#       - "5001:5000"   # React UI
+#       - "4001:4000"   # Metrics API

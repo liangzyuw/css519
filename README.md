@@ -15,14 +15,28 @@
 ### Backend + Frontend
 - docker-compose orchestrates both
 ```bash 
+    docker-compose down
     docker-compose up --build 
 ```
 
-Frontend:
+## Ports
+
+Frontend (Vite dev server):
 http://localhost:5173
 
-Backend:
+Backend API:
 http://localhost:3000
+
+Dashboard:
+http://localhost:5001/
+
+Dashboard metrics API:
+http://localhost:4001/metrics
+
+4000 - Metrics server (inside container)
+5000 - Dashboard static server (inside container)
+localhost:5001 → container:5000
+localhost:4001 → container:4000
 
 
     in frontend dir:

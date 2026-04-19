@@ -1,4 +1,4 @@
-## Textbook Platform with Educators’ Annotations
+## CoffeeJelly - Textbook Platform with Educators’ Annotations
 
 ---
 

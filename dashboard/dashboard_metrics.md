@@ -1,6 +1,6 @@
 # Operational Metrics – Product OE Dashboard
 
-## Ran by Dashboard Container to Obtain Metrics
+## Ran by Dashboard Container to Obtain Metrics (example)
 
 {
   "service_up": true,
@@ -33,7 +33,7 @@
 
 ## 3. Error Metrics
 
-- `errors_last_5_minutes`
+- `errors_last_30_minutes`
 - `errors_by_type`
 - `failed_requests_total`
 
