@@ -1,5 +1,5 @@
 # Node modules (DO NOT COMMIT)
-node_modules/
+**/node_modules/
 backend/node_modules/
 
 # Logs
@@ -8,15 +8,14 @@ yarn-debug.log*
 yarn-error.log*
 
 # Environment variables
-.env
-.env.*
+**/.env
 
 # OS files
 .DS_Store
 
 # Build outputs
-dist/
-build/
+**/dist/
+**/build/
 
 # Docker
 *.log
