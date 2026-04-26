@@ -3,7 +3,11 @@ import { getSections, getAnnotations } from "../api/api";
 import AnnotationPanel from "./AnnotationPanel";
 import AnnotationMarker from "./AnnotationMarker";
 
-export default function TextbookViewer() {
+interface TextbookViewerProps {
+  onLogout: () => void;
+}
+
+export default function TextbookViewer({ onLogout }: TextbookViewerProps) {
   const [sections, setSections] = useState<any[]>([]);
   const [selectedAnnotations, setSelectedAnnotations] = useState<any[]>([]);
 
@@ -16,18 +20,32 @@ export default function TextbookViewer() {
     setSections(sectionData);
   };
 
-    const handleMarkerClick = async (sectionId: string) => {
-        console.log("Clicked section:", sectionId);
+  const handleMarkerClick = async (sectionId: string) => {
+    console.log("Clicked section:", sectionId);
 
-        const annotations = await getAnnotations(sectionId);
+    const annotations = await getAnnotations(sectionId);
 
-        console.log("Fetched annotations:", annotations);
+    console.log("Fetched annotations:", annotations);
 
-        setSelectedAnnotations(annotations);
-    };
+    setSelectedAnnotations(annotations);
+  };
+
+  // const handleLogOut = () => {
+  //   onLogout();
+  // }
 
   return (
     <div className="flex h-screen">
+      {/* Logout Button Container */}
+      <div className="p-4 border-r border-gray-200 flex flex-col">
+        <button
+          onClick={onLogout} // 2. Call the prop directly
+          className="bg-red-500 hover:bg-red-600 text-white p-2 rounded transition-colors"
+        >
+          Log Out
+        </button>
+      </div>
+      
       {/* Content */}
       <div className="flex-1 p-8 overflow-y-auto">
         {sections.map((section) => (

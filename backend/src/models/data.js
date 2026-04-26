@@ -2,7 +2,7 @@ const textbooks = [
   {
     id: "tb1",
     title: "Intro to Mathematics",
-    author: "Mock Author",
+    author: "Andrew Math",
   },
 ];
 
@@ -13,6 +13,7 @@ const chapters = [
 const sections = [
   {
     id: "sec1",
+    textbook_id: "tb1",
     chapter_id: "ch1",
     title: "Natural Numbers",
     content: `
@@ -21,6 +22,28 @@ Natural numbers are the numbers used for counting: 1, 2, 3, ...
 They are the foundation of arithmetic and are essential in mathematics.
     `,
   },
+  {
+    id: "sec2",
+    textbook_id: "tb1",
+    chapter_id: "ch1",
+    title: "Integers",
+    content: `
+Integers include all natural numbers, their negatives, and zero: ..., -3, -2, -1, 0, 1, 2, 3, ...
+
+They are used to represent quantities that can be positive, negative, or zero.
+    `,
+  },
+  {
+    id: "sec3",
+    textbook_id: "tb1",
+    chapter_id: "ch1",
+    title: "Rational Numbers",
+    content: `
+Rational numbers are numbers that can be expressed as the quotient or fraction of two integers, where the denominator is not zero.
+
+They include all integers and fractions.
+    `,
+  }
 ];
 
 const problems = [
@@ -43,12 +66,26 @@ const annotations = [
 ];
 
 // instantly make an annotation for testing purposes so we have something on frontend when load the page
-annotations.push({
-  id: "test1",
-  content_id: "sec1",
-  content_type: "section",
-  body: "Hello from backend!",
-});
+annotations.push(
+  {
+    id: "test1",
+    content_id: "sec1",
+    content_type: "section",
+    body: "It's important to understand natural numbers before moving on to integers.",
+  },
+  {
+    id: "test2",
+    content_id: "sec2",
+    content_type: "section",
+    body: "Integers include negative numbers, but not fractions.",
+  },
+  {
+    id: "test3",
+    content_id: "sec3",
+    content_type: "section",
+    body: "By contrast, irrational numbers cannot be expressed as a simple fraction.",
+  }
+);
 
 module.exports = {
   textbooks,

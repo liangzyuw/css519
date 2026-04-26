@@ -13,8 +13,11 @@ app.use(express.json());
 // routes
 const annotationRoutes = require("./routes/annotationRoutes");
 const contentRoutes = require("./routes/contentRoutes");
+const authRoutes = require("./routes/authRoutes");
+
 app.use("/api", annotationRoutes);
 app.use("/api", contentRoutes);
+app.use("/api", authRoutes);
 
 // test root
 app.get("/", (req, res) => {
