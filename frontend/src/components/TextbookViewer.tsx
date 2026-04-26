@@ -39,7 +39,7 @@ export default function TextbookViewer({ onLogout }: TextbookViewerProps) {
       {/* Logout Button Container */}
       <div className="p-4 border-r border-gray-200 flex flex-col">
         <button
-          onClick={onLogout} // 2. Call the prop directly
+          onClick={onLogout} // Call the prop directly
           className="bg-red-500 hover:bg-red-600 text-white p-2 rounded transition-colors"
         >
           Log Out
