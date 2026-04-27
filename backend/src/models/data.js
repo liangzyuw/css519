@@ -78,13 +78,13 @@ annotations.push(
     content_id: "sec2",
     content_type: "section",
     body: "Integers include negative numbers, but not fractions.",
-  },
-  {
-    id: "test3",
-    content_id: "sec3",
-    content_type: "section",
-    body: "By contrast, irrational numbers cannot be expressed as a simple fraction.",
   }
+  // {
+  //   id: "test3",
+  //   content_id: "sec3",
+  //   content_type: "section",
+  //   body: "By contrast, irrational numbers cannot be expressed as a simple fraction.",
+  // }
 );
 
 module.exports = {

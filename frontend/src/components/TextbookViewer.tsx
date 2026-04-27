@@ -36,7 +36,7 @@ export default function TextbookViewer({ onLogout }: TextbookViewerProps) {
 
   return (
     <div className="flex h-screen">
-      {/* Logout Button Container */}
+      {/* Button Container */}
       <div className="p-4 border-r border-gray-200 flex flex-col">
         <button
           onClick={onLogout} // Call the prop directly
