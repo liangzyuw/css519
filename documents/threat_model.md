@@ -9,6 +9,7 @@ The architecture consists of:
 - Node.js/Express backend API
 - In-memory datastore (mock, future DB)
 - Dockerized deployment
+- JWT-based authentication
 
 ---
 
@@ -48,7 +49,7 @@ The architecture consists of:
 - `POST /annotations`
 - `GET /annotations`
 - `GET /chapters/{id}/sections`
-- (later implementation) `/auth/login`, `/users`
+- `POST /auth/login`, `/users`
 
 ### Frontend Inputs
 - Annotation text input
@@ -125,7 +126,6 @@ The architecture consists of:
 
 ## 7. Summary of Future Security Enhancements
 
-- JWT-based authentication
 - HTTPS enforcement
 - Persistent database with access controls
 - Input sanitization (prevent XSS)
