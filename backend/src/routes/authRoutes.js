@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { users } = require("../models/credentials");
 
-const SECRET = "jelly_coffee"; // move to env later
+const SECRET = process.env.JWT_SECRET;
 
 // POST /auth/login
 router.post("/auth/login", (req, res) => {

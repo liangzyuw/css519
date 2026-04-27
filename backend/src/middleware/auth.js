@@ -23,7 +23,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     // verify the token using the same secret key that was used to sign it during login
-    const decoded = jwt.verify(token, "jelly_coffee");
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // decoded contains { id, role } based on how it signed the token in authRoutes.js
 
     const user = users.find((u) => u.id === decoded.id);
