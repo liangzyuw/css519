@@ -48,7 +48,7 @@ The architecture consists of:
 - `POST /annotations`
 - `GET /annotations`
 - `GET /chapters/{id}/sections`
-- (later implementation) `/auth/login`, `/users`
+- `POST /auth/login`, `/users`
 
 ### Frontend Inputs
 - Annotation text input
