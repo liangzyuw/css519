@@ -1,0 +1,20 @@
+services:
+  backend:
+    image: ghcr.io/liangzyuw/product-backend:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+
+  frontend:
+    image: ghcr.io/liangzyuw/product-frontend:latest
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  dashboard:
+    image: ghcr.io/liangzyuw/product-dashboard:latest
+    ports:
+      - "5001:5000"
+      - "4001:4000"
