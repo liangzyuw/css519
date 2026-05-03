@@ -3,6 +3,8 @@ services:
     build: ./backend
     ports:
       - "3000:3000"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
 
   frontend:
     build: ./frontend

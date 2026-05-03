@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      JWT_SECRET: test-secret
+      JWT_SECRET: test_secret_for_ci
 
     steps:
       - name: Checkout repository
@@ -45,6 +45,8 @@ jobs:
 
       - name: Start containers
         run: docker compose up -d
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: Wait for backend to be ready
         run: |
