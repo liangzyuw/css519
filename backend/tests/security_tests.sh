@@ -50,11 +50,14 @@ STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
 check_status "Test 3: POST annotation without login" "401" "$STATUS"
 
 
-STUDENT_TOKEN=$(curl -s \
+LOGIN_RESPONSE=$(curl -s \
   -X POST "$BASE_URL/auth/login" \
   -H "Content-Type: application/json" \
-  -d '{"email":"student@example.com","password":"password123"}' \
-  | jq -r '.token')
+  -d '{"email":"student@example.com","password":"password123"}')
+
+echo "Student login response: $LOGIN_RESPONSE"
+
+STUDENT_TOKEN=$(echo "$LOGIN_RESPONSE" | jq -r '.token')
 
 if [ "$STUDENT_TOKEN" = "null" ] || [ -z "$STUDENT_TOKEN" ]; then
   echo "Test 4 FAILED: Could not retrieve student token"
