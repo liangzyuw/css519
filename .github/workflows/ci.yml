@@ -66,10 +66,10 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Run security API tests
-        run: bash tests/security_tests.sh
+        run: bash backend/tests/security_tests.sh
 
       - name: Run functional API tests
-        run: bash tests/functional_tests.sh
+        run: bash backend/tests/functional_tests.sh
 
       - name: Show container logs on failure
         if: failure()
