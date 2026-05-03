@@ -10,5 +10,6 @@ COPY . .
 # Copy entire backend code into the container
 EXPOSE 3000
 # Tell Docker the app runs on port 3000
-CMD ["node", "src/app.js"]
+# CMD ["node", "src/app.js"]
+CMD ["node", "src/server.js"]
 # Command to start the server when the container runs
