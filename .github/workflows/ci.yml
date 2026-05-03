@@ -4,21 +4,41 @@ on:
   push:
     branches:
       - main
-      - master
+      - work
   pull_request:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    env:
+      JWT_SECRET: test_secret_for_ci
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Show Docker versions
-        run: |
-          docker --version
-          docker compose version
+      # just a debugging/convenience step, can be useful when troubleshooting CI failures
+      # - name: Show Docker versions
+      #   run: |
+      #     docker --version
+      #     docker compose version
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm install
+
+      - name: Run backend unit tests
+        working-directory: backend
+        run: npm test
 
       - name: Build containers
         run: docker compose build
@@ -46,10 +66,10 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Run security API tests
-        run: bash tests/security_tests.sh
+        run: bash backend/tests/security_tests.sh
 
       - name: Run functional API tests
-        run: bash tests/functional_tests.sh
+        run: bash backend/tests/functional_tests.sh
 
       - name: Show container logs on failure
         if: failure()

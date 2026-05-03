@@ -65,10 +65,12 @@ app.get("/", (req, res) => {
   res.send("Product API running");
 });
 
+module.exports = app;
+
 // run the express app and opens a server on port 3000
     // run node app.js in src directory to start the server
     // API is live at http://localhost:3000
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// const PORT = 3000;
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });

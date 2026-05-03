@@ -1,42 +1,44 @@
 const express = require("express");
 const router = express.Router();
+
 const { annotations } = require("../models/data");
+const {
+  getAnnotationsForContent,
+  createAnnotation,
+  deleteAnnotationById,
+} = require("../services/annotationService");
 
 const authMiddleware = require("../middleware/auth");
 const requireInstructor = require("../middleware/requireInstructor");
 
-// only instructors should be allowed to create and delete annotations, but anyone can view them
+// only instructors can create annotations
 router.post("/annotations", authMiddleware, requireInstructor, (req, res) => {
-  const newAnnotation = {
-    id: `ann_${annotations.length + 1}`,
-    ...req.body,
-    created_at: new Date(),
-  };
-
-  annotations.push(newAnnotation);
-
-  res.status(201).json(newAnnotation);
+  try {
+    const newAnnotation = createAnnotation(annotations, req.body);
+    res.status(201).json(newAnnotation);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 });
 
-// router.delete("/annotations/:id", authMiddleware, requireInstructor, (req, res) => {
-//   const { id } = req.params;
-//   const index = annotations.findIndex((a) => a.id === id);
+// useful for security tests later
+router.delete("/annotations/:id", authMiddleware, requireInstructor, (req, res) => {
+  const deleted = deleteAnnotationById(annotations, req.params.id);
 
-//   if (index === -1) {
-//     return res.status(404).json({ message: "Annotation not found" });
-//   }
+  if (!deleted) {
+    return res.status(404).json({ message: "Annotation not found" });
+  }
 
-//   annotations.splice(index, 1);
-//   res.json({ message: "Annotation deleted" });
-// });
+  res.status(204).send();
+});
 
 router.get("/annotations", (req, res) => {
   const { content_id, content_type } = req.query;
 
-  const result = annotations.filter(
-    (a) =>
-      a.content_id === content_id &&
-      a.content_type === content_type
+  const result = getAnnotationsForContent(
+    annotations,
+    content_id,
+    content_type
   );
 
   res.json(result);
