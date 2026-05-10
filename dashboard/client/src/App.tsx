@@ -42,6 +42,7 @@ export default function App() {
   return (
     <div className="container">
       <h1>CoffeeJelly Dashboard</h1>
+      <h2 className="subtitle">Real-time Metrics and Service Health for CoffeeJelly, the educational textbook-annotation platform.</h2>
 
       <p className="text-sm text-gray-500 mb-4"> Last updated: {new Date().toLocaleTimeString()} </p>
 

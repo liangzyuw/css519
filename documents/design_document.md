@@ -39,7 +39,7 @@ The current mock implementation includes:
 - Separate Dockerized operational excellence dashboard
 - Fake metrics endpoint for dashboard display
 
-### 4.2 Out of Scope for Current Version
+### 1.3 Out of Scope for Current Version
 
 The following features are not part of the current mock implementation but are planned as future enhancements:
 
@@ -52,7 +52,7 @@ The following features are not part of the current mock implementation but are p
 - Cloud deployment
 
 
-### 4.3 Desired Implementations
+### 1.4 Desired Implementations
 - Real-time collaboration
 - Full course assignment workflow
 - Password hashing
@@ -64,7 +64,7 @@ The following features are not part of the current mock implementation but are p
 ## 2. System Overview
 
 
-### 5. High-Level Architecture
+### 2.1 High-Level Architecture
 
 Product uses a multi-container architecture consisting of four major components:
 
@@ -128,6 +128,8 @@ The primary goals of the system are:
 - Course(id, title, instructor_id)  
 - Enrollment(id, user_id, course_id)  
 
+### 3.2 Data Model
+
 #### APIs:  
 - POST /courses  
 - POST /assignments  
@@ -186,6 +188,8 @@ Course management:
 - GET /courses
 - GET /api/courses/{course_id}  
 
+### 3.3 Example Authentication
+
 ##### Authentication:
 - POST /users  
 {
@@ -217,6 +221,71 @@ Authorization: Bearer <token>
 - Highlight(id, user_id, section_id, start_offset, end_offset)  
 - Bookmark(id, user_id, content_id)  
 - HintUsage(id, user_id, annotation_id, timestamp)   -->
+
+### 3.4 User flows
+```
+Student User Flow
+  +-------------------+      +-------------------+      +----------------------+
+  | Open Web App      | ---> | Login             | ---> | Choose Enrolled      |
+  |                   |      |                   |      | Textbook             |
+  +-------------------+      +-------------------+      +----------+-----------+
+                                                                   |
+                                                                   v
+                                                        +----------------------+
+                                                        | View Textbook        |
+                                                        | Sections / Problems  |
+                                                        +----------+-----------+
+                                                                   |
+                                      +----------------------------+-----------------------+
+                                      |                                                    |
+                                      v                                                    v
+                          +----------------------+                              +----------------------+
+                          | Click Annotation     |                              | Leave Suggestion /   |
+                          | Marker               |                              | Request Help         |
+                          +----------+-----------+                              +----------+-----------+
+                                      |                                                    |
+                                      v                                                    v
+                          +----------------------+                              +----------------------+
+                          | View Instructor      |                              | Suggestion Stored    |
+                          | Annotation / Hint    |                              | for Instructor       |
+                          +----------------------+                              +----------------------+
+```
+
+```
+Instructor User Flow
++-------------------+      +-------------------+      +--------------------+
+| Open Web App      | ---> | Login             | ---> | Browse Courses     |
++-------------------+      +-------------------+      +---------+----------+
+                                                                |
+                                                                v
+                                                      +----------------------+
+                                                      | Select Course /      |
+                                                      | Textbook             |
+                                                      +----------+-----------+
+                                                                 |
+                                             +-------------------+--------------------+
+                                             |                                        |
+                                             v                                        v
+                                 +---------------+                            +---------------+
+                                 | View Student  |                            | View Existing |
+                                 | Suggestions   |                            | Annotations   |
+                                 +----------+----+                            +-------+-------+
+                                            |                                         |
+                                           +--------------------+---------------------+
+                                                                |
+                                                                v
+                                                      +----------------------+
+                                                      | Create Annotation    |
+                                                      | Explanation / Hint   |
+                                                      +----------+-----------+
+                                                                |
+                                                                v
+                                                      +----------------------+
+                                                      | Annotation Available |
+                                                      | to Students          |
+                                                      +----------------------+
+
+```
 
 ## 4. Frontend Design
 
