@@ -10,10 +10,14 @@ Most textbook platforms have limited opportunities for instructor-guided clarifi
 
 This project is currently implemented as a mock educational web application with hard-coded textbook content and simulated operational data. Although simplified, the architecture is designed to reflect real-world software engineering concerns such as modular service design, authentication, API security, Dockerized deployment, and operational observability.
 
-### 1.1 Purpose
-This document outlines the technical design for a web-based textbook platform that enables educators to embed annotations and contextual explanations directly within textbook content and problem sets. The system aims to improve student comprehension and engagement, especially for material content meant to practice higher-order thinking skills such as critical thinking. 
+For now, the focus isn't to build an application that completely outshines existing and well-known platforms, but to have one that improves communication between instructors/teachers and students through textbook or other reading materials.
 
-The purpose of CoffeeJelly is to explore how software systems can improve educational delivery by making textbook content more interactive and instructor-aware. Many students struggle not because educational content is unavailable, but because explanations are often separated from the exact point of confusion. A student may encounter a definition, theorem, or homework problem and need immediate contextual guidance.
+### 1.1 Purpose
+This document outlines the technical design for a web-based textbook platform that enables educators to embed annotations and contextual explanations directly within textbook content and problem sets. The purpose of CoffeeJelly is to explore how software systems can improve educational delivery by making textbook content more interactive and instructor-aware.
+
+While researching existing products like Hypothesis and Perusall, they usually lack a dedicated workspace for instructor-prioritized tools, and on the students' end, a simplifed way for students to convey exactly what challenging concepts they're struggling with. 
+
+For instance, instructors could benefit from being able to surface and immediately known which textbook sections had the most confusion, unanswered threads, or high impact annotation requests. The application should assist them with pedagogical analytics that show where most learning breakdowns happen, which concepts need reteaching, or which annotations helped students the most. On the student end, CoffeeJelly should make the process of an annotation request workflow as easy and intuitive as possible, as if they're just asking a question directly to the instructor (or also the entire class, up to them). They'd achieve this by marking sections or passages either with comments or just signals that indicate "confusion" or "needs example" and such. 
 
 CoffeeJelly aims to support this need by allowing instructors to attach annotations directly to textbook sections or problems. These annotations may include:
 
