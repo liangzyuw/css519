@@ -275,7 +275,7 @@ The following risks should receive the highest priority in early development:
 
 ## 8. Recommended Early Metrics
 
-To identify customer disruption early, Product should track the following metrics:
+To identify customer disruption early, CoffeeJelly should track the following metrics:
 
 ```text
 service_up

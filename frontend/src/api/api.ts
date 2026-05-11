@@ -4,6 +4,8 @@ const API = axios.create({
   baseURL: "http://localhost:3000/api",
 });
 
+const METRICS_API = axios.create({ baseURL: "http://localhost:3000" });
+
 // automates the inclusion of an authentication token to ensure your API can identify the user,
 // crucial for maintaining secure sessions and controlling access to protected resources
 // By intercepting outgoing requests,can seamlessly attach the token without needing 
@@ -28,15 +30,37 @@ API.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
+// report client metric
+export const reportClientMetric = async (name: string, value: number) => {
+  try {
+    await METRICS_API.post("/metrics/client", { name, value });
+  } 
+  catch (err) {
+    console.error("Failed to report client metric:", err);
+  }
+};
+
 export const getSections = async (chapterId: string) => {
+  const start = performance.now();
+
   const res = await API.get(`/chapters/${chapterId}/sections`);
+
+  const duration = Math.round(performance.now() - start);
+  await reportClientMetric("textbook_load_time_ms", duration);
+
   return res.data;
 };
 
 export const getAnnotations = async (contentId: string) => {
+  const start = performance.now();
+
   const res = await API.get(
     `/annotations?content_type=section&content_id=${contentId}`
   );
+
+  const duration = Math.round(performance.now() - start);
+  await reportClientMetric("annotation_load_time_ms", duration);
+
   return res.data;
 };
 

@@ -14,7 +14,12 @@
 
 - `service_up` (boolean)
 - `frontend_up` (boolean)
+- `backend_up` (boolean)
 - `backend_uptime_seconds`
+
+service_up   = overall product status.  
+frontend_up  = textbook UI reachable.  
+backend_up   = API reachable.  
 
 ---
 
