@@ -4,29 +4,111 @@
 
 ## 1. Introduction
 
-### 1.1 Purpose
-This document outlines the technical design for a web-based textbook platform that enables educators to embed annotations and contextual explanations directly within textbook content and problem sets. The system aims to improve student comprehension and engagement, especially for material content meant to practice higher-order thinking skills such as critical thinking. 
+CoffeeJelly is a web-based educational platform purposed and designed towards improving how students interact with textbook content in classroom settings and environments. This system allows teachers, instructors, and professors to add contetxual annotations, explanations, and hints directly embedded into textbook content. By serving as another form of communication between students and educators, they can receive targeted instructional support while reading or solving material.  
 
-### 1.2 Scope
-The platform supports:
-- Digital textbook library and rendering
-- Instructor-created annotations
-- Student interaction with comments and forums
-- Classroom-based access control
-- Possible analytics on engagement and learning behavior
+Most textbook platforms have limited opportunities for instructor-guided clarification, so CoffeeJelly addresses this gap by combining textbook content, teachers' annotations, and overall course structure into a single software product. The intention is to leave the guidance in the teacher's hands, while being a bridge that supports the connection with students. The long-term goal is to adapt additional features, both familiar and innovative to foster an accessible learning environment for future generations of students. For instance, a way for students to request annotations of particular problems, so instructors would know ahead of time which aspects most students seem troubled by.  
+
+This project is currently implemented as a mock educational web application with hard-coded textbook content and simulated operational data. Although simplified, the architecture is designed to reflect real-world software engineering concerns such as modular service design, authentication, API security, Dockerized deployment, and operational observability.
+
+For now, the focus isn't to build an application that completely outshines existing and well-known platforms, but to have one that improves communication between instructors/teachers and students through textbook or other reading materials.
+
+### 1.1 Purpose
+This document outlines the technical design for a web-based textbook platform that enables educators to embed annotations and contextual explanations directly within textbook content and problem sets. The purpose of CoffeeJelly is to explore how software systems can improve educational delivery by making textbook content more interactive and instructor-aware.
+
+While researching existing products like Hypothesis and Perusall, they usually lack a dedicated workspace for instructor-prioritized tools, and on the students' end, a simplifed way for students to convey exactly what challenging concepts they're struggling with. 
+
+For instance, instructors could benefit from being able to surface and immediately known which textbook sections had the most confusion, unanswered threads, or high impact annotation requests. The application should assist them with pedagogical analytics that show where most learning breakdowns happen, which concepts need reteaching, or which annotations helped students the most. On the student end, CoffeeJelly should make the process of an annotation request workflow as easy and intuitive as possible, as if they're just asking a question directly to the instructor (or also the entire class, up to them). They'd achieve this by marking sections or passages either with comments or just signals that indicate "confusion" or "needs example" and such. 
+
+CoffeeJelly aims to support this need by allowing instructors to attach annotations directly to textbook sections or problems. These annotations may include:
+
+- Clarifying explanations
+- Homework hints
+- Conceptual reminders
+- Common mistake warnings
+- Additional context for difficult ideas
+
+In a broader educational context, this could assist improve student comprehension, reduce barriers to independent study, and provide instructors with a scalable way to support many students at once.
+
+### 1.2 Current Scope
+
+The current mock implementation includes:
+
+- React frontend for textbook viewing
+- Node.js/Express backend API
+- Hard-coded textbook content
+- Hard-coded user credentials
+- Annotation creation and retrieval APIs
+- Dockerized backend service
+- Dockerized frontend service
+- Separate Dockerized operational excellence dashboard
+- Fake metrics endpoint for dashboard display
+
+### 1.3 Out of Scope for Current Version
+
+The following features are not part of the current mock implementation but are planned as future enhancements:
+
+- Persistent database storage
+- Production-grade authentication
+- Full JWT validation middleware
+- Instructor annotation editor UI
+- Student/instructor role-based permissions
+- Real metrics emitted from backend services
+- Cloud deployment
+
+
+### 1.4 Desired Implementations
+- Real-time collaboration
+- Full course assignment workflow
+- Password hashing
+- Personalized Student Workbooks and Notes
+- Possible AI integration 
 
 ---
 
 ## 2. System Overview
 
-### 2.1 High-Level Architecture
-**client-server architecture** with a modular backend:
 
+### 2.1 High-Level Architecture
+
+Product uses a multi-container architecture consisting of four major components:
+
+1. **Frontend Web Application**
+2. **Backend API Service**
+3. **Operational Excellence Dashboard**
+4. **Dashboard Metrics API**
+
+The system is deployed locally using Docker Compose.
+
+```text
++-------------------+        +-------------------+
+|                   |        |                   |
+| React Frontend    | -----> | Express Backend   |
+| localhost:5173    |        | localhost:3000    |
+|                   |        |                   |
++-------------------+        +-------------------+
+
+
++----------------------------+        +----------------------------+
+|                            |        |                            |
+| OE Dashboard Interface     | -----> | Dashboard Metrics API      |
+| localhost:5001             |        | localhost:4001             |
+|                            |        |                            |
++----------------------------+        +----------------------------+
+```
 
 ### 2.2 Key Design Principles
 - **Modularity**: Independent services for scalability
 - **Usability**: Minimal friction for students and educators
 - **Security**: Role-based access and data protection
+
+The primary goals of the system are:
+
+1. Provide a web-based interface for viewing textbook content.
+2. Allow instructor-created annotations to appear alongside textbook sections and problems.
+3. Support simple authentication so users must log in before accessing course content.
+4. Provide RESTful APIs for textbook content, annotations, users, courses, and enrollments.
+5. Run the application using Docker containers for consistent deployment.
+6. Provide a separate operational excellence dashboard for monitoring product state.
 
 ---
 
@@ -49,6 +131,8 @@ The platform supports:
 - User(id, name, email, role, created_at)  
 - Course(id, title, instructor_id)  
 - Enrollment(id, user_id, course_id)  
+
+### 3.2 Data Model
 
 #### APIs:  
 - POST /courses  
@@ -108,6 +192,8 @@ Course management:
 - GET /courses
 - GET /api/courses/{course_id}  
 
+### 3.3 Example Authentication
+
 ##### Authentication:
 - POST /users  
 {
@@ -140,14 +226,81 @@ Authorization: Bearer <token>
 - Bookmark(id, user_id, content_id)  
 - HintUsage(id, user_id, annotation_id, timestamp)   -->
 
+### 3.4 User flows
+```
+Student User Flow
+  +-------------------+      +-------------------+      +----------------------+
+  | Open Web App      | ---> | Login             | ---> | Choose Enrolled      |
+  |                   |      |                   |      | Textbook             |
+  +-------------------+      +-------------------+      +----------+-----------+
+                                                                   |
+                                                                   v
+                                                        +----------------------+
+                                                        | View Textbook        |
+                                                        | Sections / Problems  |
+                                                        +----------+-----------+
+                                                                   |
+                                      +----------------------------+-----------------------+
+                                      |                                                    |
+                                      v                                                    v
+                          +----------------------+                              +----------------------+
+                          | Click Annotation     |                              | Leave Suggestion /   |
+                          | Marker               |                              | Request Help         |
+                          +----------+-----------+                              +----------+-----------+
+                                      |                                                    |
+                                      v                                                    v
+                          +----------------------+                              +----------------------+
+                          | View Instructor      |                              | Suggestion Stored    |
+                          | Annotation / Hint    |                              | for Instructor       |
+                          +----------------------+                              +----------------------+
+```
+
+```
+Instructor User Flow
++-------------------+      +-------------------+      +--------------------+
+| Open Web App      | ---> | Login             | ---> | Browse Courses     |
++-------------------+      +-------------------+      +---------+----------+
+                                                                |
+                                                                v
+                                                      +----------------------+
+                                                      | Select Course /      |
+                                                      | Textbook             |
+                                                      +----------+-----------+
+                                                                 |
+                                             +-------------------+--------------------+
+                                             |                                        |
+                                             v                                        v
+                                 +---------------+                            +---------------+
+                                 | View Student  |                            | View Existing |
+                                 | Suggestions   |                            | Annotations   |
+                                 +----------+----+                            +-------+-------+
+                                            |                                         |
+                                           +--------------------+---------------------+
+                                                                |
+                                                                v
+                                                      +----------------------+
+                                                      | Create Annotation    |
+                                                      | Explanation / Hint   |
+                                                      +----------+-----------+
+                                                                |
+                                                                v
+                                                      +----------------------+
+                                                      | Annotation Available |
+                                                      | to Students          |
+                                                      +----------------------+
+
+```
+
 ## 4. Frontend Design
 
 ### 4.1 Technology Stack
-- React or Next.js  
+- React 
 - TypeScript  
+- Vite
 - Tailwind CSS (UI styling)  
+- Axios
 
-### 4.2 Key UI Components
+### 4.2 Key Potential UI Components
 - Textbook Viewer  
 - Scrollable content  
 - Inline annotation markers  

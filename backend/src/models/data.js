@@ -1,13 +1,14 @@
 const textbooks = [
   {
     id: "tb1",
-    title: "Intro to Mathematics",
+    title: "Advanced Engineering Mathematics",
     author: "Andrew Math",
   },
 ];
 
 const chapters = [
-  { id: "ch1", textbook_id: "tb1", title: "Numbers", order_index: 1 },
+  { id: "ch1", textbook_id: "tb1", title: "Number Systems", order_index: 1 },
+  { id: "ch2", textbook_id: "tb1", title: "Vector Analysis", order_index: 2 },
 ];
 
 const sections = [
@@ -15,69 +16,89 @@ const sections = [
     id: "sec1",
     textbook_id: "tb1",
     chapter_id: "ch1",
-    title: "Natural Numbers",
-    content: `
-Natural numbers are the numbers used for counting: 1, 2, 3, ...
+    title: "Natural Numbers and Induction",
+    content: `Natural numbers (1, 2, 3, ...) are the foundation of all discrete mathematics. In formal logic, we often define them using the Peano Axioms, which establish that every natural number has a unique successor. 
 
-They are the foundation of arithmetic and are essential in mathematics.
-    `,
+One of the most powerful tools in this domain is Mathematical Induction. To prove a property P(n) for all natural numbers:
+1. Base Case: Show P(1) is true.
+2. Inductive Step: Show that if P(k) is true, then P(k+1) must also be true.
+
+This 'domino effect' allows us to prove infinite sequences of statements with finite logic. It is frequently used in algorithm analysis to prove the correctness of recursive functions.`,
   },
   {
     id: "sec2",
     textbook_id: "tb1",
     chapter_id: "ch1",
-    title: "Integers",
-    content: `
-Integers include all natural numbers, their negatives, and zero: ..., -3, -2, -1, 0, 1, 2, 3, ...
+    title: "The Real Number Line",
+    content: `The Real Number system (R) encompasses all rational and irrational numbers. Unlike integers, real numbers are 'dense,' meaning between any two real numbers, there is always another real number.
 
-They are used to represent quantities that can be positive, negative, or zero.
-    `,
+A critical concept here is the Completeness Axiom. This states that every non-empty set of real numbers that is bounded above has a least upper bound (a supremum). Without this property, calculus as we know it would fail, as we could not guarantee the existence of limits for increasing sequences that stay within a certain range.`,
   },
   {
     id: "sec3",
     textbook_id: "tb1",
     chapter_id: "ch1",
-    title: "Rational Numbers",
-    content: `
-Rational numbers are numbers that can be expressed as the quotient or fraction of two integers, where the denominator is not zero.
+    title: "The Divergence Theorem (Gauss's Law)",
+    content: `The Divergence Theorem is a cornerstone of vector calculus. It relates the behavior of a vector field inside a volume to its behavior on the surface of that volume. 
 
-They include all integers and fractions.
-    `,
+Imagine a fluid flowing through space. The 'Divergence' of the velocity field at a point tells you if fluid is being created (a source) or disappearing (a sink) at that point. The theorem states:
+
+The total flux of a vector field F through a closed surface S is equal to the integral of the divergence of F over the volume V enclosed by S.
+
+Mathematically, this is expressed as the triple integral of (div F) over volume V being equal to the double integral of (F dot n) over surface S, where n is the outward-pointing unit normal vector. This is used extensively in physics to calculate electric fields and fluid pressure.`,
+  },
+  {
+    id: "sec4",
+    textbook_id: "tb1",
+    chapter_id: "ch1",
+    title: "Eigenvalues and System Stability",
+    content: `In linear algebra, square matrices represent linear transformations. Eigenvalues (lambda) and Eigenvectors (v) are the 'DNA' of these matrices. They satisfy the equation: A * v = lambda * v.
+
+When you multiply a matrix by its eigenvector, the vector doesn't change direction; it only gets scaled by the factor lambda. To find these values, we solve the Characteristic Equation: determinant of (A - lambda * I) = 0.
+
+In engineering, eigenvalues are used to determine the stability of structures and circuits. If the real part of an eigenvalue in a differential system is positive, the system will grow without bound (instability). If negative, the system will settle back to equilibrium (stability).`,
   }
 ];
 
 const problems = [
   {
     id: "prob1",
-    section_id: "sec1",
-    question_text: "What is 2 + 2?",
+    section_id: "sec3",
+    question_text: "Verify the Divergence Theorem for a vector field F = (x, y, z) over a unit cube centered at the origin.",
+  },
+  {
+    id: "prob2",
+    section_id: "sec4",
+    question_text: "Find the eigenvalues for a 2x2 matrix where the top row is [4, 1] and the bottom row is [2, 3].",
   },
 ];
 
 const annotations = [
-];
-
-// instantly make an annotation for testing purposes so we have something on frontend when load the page
-annotations.push(
   {
     id: "test1",
     content_id: "sec1",
     content_type: "section",
-    body: "It's important to understand natural numbers before moving on to integers.",
+    body: "Induction is often compared to a row of falling dominoes; if the first falls, and any falling domino knocks over the next, they all fall.",
   },
   {
     id: "test2",
-    content_id: "sec2",
+    content_id: "sec3",
     content_type: "section",
-    body: "Integers include negative numbers, but not fractions.",
+    body: "Visual Tip: Think of flux as the amount of air blowing through a window. The Divergence Theorem says the total air leaving a room equals the sum of all air 'sources' (like fans) inside.",
+  },
+  {
+    id: "test3",
+    content_id: "sec4",
+    content_type: "section",
+    body: "Critical Note: Eigenvalues are only defined for square matrices (n x n).",
+  },
+  {
+    id: "test4",
+    content_id: "prob2",
+    content_type: "problem",
+    body: "Hint: The characteristic equation for this problem will be a quadratic equation: lambda^2 - 7*lambda + 10 = 0.",
   }
-  // {
-  //   id: "test3",
-  //   content_id: "sec3",
-  //   content_type: "section",
-  //   body: "By contrast, irrational numbers cannot be expressed as a simple fraction.",
-  // }
-);
+];
 
 module.exports = {
   textbooks,
