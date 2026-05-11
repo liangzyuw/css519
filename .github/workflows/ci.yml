@@ -34,9 +34,9 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: backend
-        run: npm install
+        run: npm ci # install exactly whats in package-lock.json
 
-      - name: Run backend unit tests
+      - name: Run backend unit and operational tests
         working-directory: backend
         run: npm test
 
@@ -64,6 +64,12 @@ jobs:
 
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
+
+      # a direct metrics readiness check after the backend readiness check,  since OE dashboard depends on /metrics
+      - name: Verify backend metrics endpoint
+        run: |
+          echo "Checking backend metrics endpoint..."
+          curl -s http://localhost:3000/metrics | jq '.'
 
       - name: Run security API tests
         run: bash backend/tests/security_tests.sh
