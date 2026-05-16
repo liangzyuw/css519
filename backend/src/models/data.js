@@ -9,6 +9,7 @@ const textbooks = [
 const chapters = [
   { id: "ch1", textbook_id: "tb1", title: "Number Systems", order_index: 1 },
   { id: "ch2", textbook_id: "tb1", title: "Vector Analysis", order_index: 2 },
+  { id: "ch3", textbook_id: "tb1", title: "Equations", order_index: 3 },
 ];
 
 const sections = [
@@ -37,7 +38,7 @@ A critical concept here is the Completeness Axiom. This states that every non-em
   {
     id: "sec3",
     textbook_id: "tb1",
-    chapter_id: "ch1",
+    chapter_id: "ch2",
     title: "The Divergence Theorem (Gauss's Law)",
     content: `The Divergence Theorem is a cornerstone of vector calculus. It relates the behavior of a vector field inside a volume to its behavior on the surface of that volume. 
 
@@ -50,7 +51,7 @@ Mathematically, this is expressed as the triple integral of (div F) over volume 
   {
     id: "sec4",
     textbook_id: "tb1",
-    chapter_id: "ch1",
+    chapter_id: "ch2",
     title: "Eigenvalues and System Stability",
     content: `In linear algebra, square matrices represent linear transformations. Eigenvalues (lambda) and Eigenvectors (v) are the 'DNA' of these matrices. They satisfy the equation: A * v = lambda * v.
 
