@@ -81,7 +81,7 @@ backend_up   = API reachable.
 
 --- 
 
-## 9. Error Metrics (not implemented)
+## 9. Error Metrics (all not implemented)
 
 - `errors_last_30_minutes`
 - `errors_by_type`
