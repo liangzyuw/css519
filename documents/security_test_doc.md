@@ -59,7 +59,7 @@ Defines initial security test cases for the web application focusing on API secu
 - **Payload Example:**
 ```json
 {
-  "content_id": "sec1",
+  "content_id": "tb1-sec1",
   "admin": true
 }
 ```

@@ -3,6 +3,8 @@ services:
     build: ./backend
     ports:
       - "3000:3000"
+    volumes:
+      - ./backend/data:/app/data
     environment:
       - JWT_SECRET=${JWT_SECRET}
 
@@ -18,6 +20,8 @@ services:
     ports:
       - "5001:5000"
       - "4001:4000"
+    depends_on:
+      - backend
 
 
 # version: "3.8"

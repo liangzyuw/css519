@@ -26,3 +26,6 @@ yarn-error.log*
 
 # Optional (if you add later)
 coverage/
+
+# Runtime metrics data
+backend/data/metrics.json

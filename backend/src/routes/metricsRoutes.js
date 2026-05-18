@@ -5,7 +5,8 @@ const {
   getMetrics,
   recordMetric,
 } = require("../models/metricsStore");
-const { annotations } = require("../models/data");
+
+const { annotations, textbooks } = require("../models/data");
 
 // Dashboard reads this
 router.get("/metrics", (req, res) => {
@@ -13,9 +14,9 @@ router.get("/metrics", (req, res) => {
 
   res.json({
     ...baseMetrics,
-
-    // count current in-memory annotation store
-    annotations_total: annotations.length,
+    
+    textbooks_total: textbooks.length,
+    annotations_total: annotations.length,     // count current in-memory annotation store
   });
 });
 

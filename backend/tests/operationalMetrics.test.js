@@ -26,6 +26,7 @@ describe("Operational metrics", () => {
     expect(res.body).toHaveProperty("annotation_load_time_ms");
 
     expect(res.body).toHaveProperty("annotations_total");
+    expect(res.body).toHaveProperty("textbooks_total");
   });
 
   // test 2: Annotation creation changes actual annotation metric
@@ -47,7 +48,7 @@ describe("Operational metrics", () => {
       .post("/api/annotations")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        content_id: "sec1",
+        content_id: "tb1-sec1",
         content_type: "section",
         author_id: "user_2",
         body: "This is a test annotation.",
