@@ -26,6 +26,7 @@ describe("Operational metrics", () => {
     expect(res.body).toHaveProperty("annotation_load_time_ms");
 
     expect(res.body).toHaveProperty("annotations_total");
+    expect(res.body).toHaveProperty("textbooks_total");
   });
 
   // test 2: Annotation creation changes actual annotation metric

@@ -2,8 +2,14 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { users } = require("../models/credentials");
+const { incrementMetric } = require("../models/metricsStore");
 
-const SECRET = process.env.JWT_SECRET;
+const SECRET = process.env.JWT_SECRET || "dev_secret_key";
+if (!SECRET) {
+  throw new Error("JWT_SECRET is not configured");
+}
+
+// console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
 
 // POST /auth/login
 router.post("/auth/login", (req, res) => {
@@ -14,6 +20,10 @@ router.post("/auth/login", (req, res) => {
   );
 
   if (!user) {
+    // track failed logins, incremement these two metrics on the dashboard whenever a login attempt fails 
+    incrementMetric("failed_login_count");
+    incrementMetric("unauthorized_requests_count");
+
     return res.status(401).json({ message: "Invalid credentials" });
   }
 

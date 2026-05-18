@@ -6,6 +6,7 @@
   "service_up": true,
   "api_requests_per_minute": 42,
   "annotations_total": 12,
+  "textbooks_total": 2,
   "active_users": 3,
   "errors_last_5_minutes": 0
 }

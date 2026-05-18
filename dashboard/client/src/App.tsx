@@ -170,6 +170,7 @@ export default function App() {
           <h3>Usage Metrics</h3>
           <div className="metric-grid">
             <MetricCard title="Active Users" value={metrics.active_users} />
+            <MetricCard title="Textbooks" value={metrics.textbooks_total} />
             <MetricCard title="Annotations" value={metrics.annotations_total} />
           </div>
         </div>
@@ -179,7 +180,7 @@ export default function App() {
           <h3>Security</h3>
           <div className="metric-grid">
             <MetricCard title="Unauthorized" value={metrics.unauthorized_requests_count} />
-            <MetricCard title="Failed Logins" value="0" />
+            <MetricCard title="Failed Logins" value={metrics.failed_login_count} />
             <MetricCard title="Unknown Requests" value="0" />
           </div>
         </div>

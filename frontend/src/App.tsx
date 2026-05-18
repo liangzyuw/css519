@@ -12,6 +12,11 @@ function App() {
     null
   );
 
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+    setSelectedTextbookId(null);
+  };
+
   // Logic to clear storage and update state
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -24,19 +29,12 @@ function App() {
     setSelectedTextbookId(null);
   };
 
-  if (!selectedTextbookId) {
-    return (
-      <TextbookLanding
-        onSelectTextbook={setSelectedTextbookId}
-        onLogout={handleLogout}
-      />
-    );
-  }
-
+  // 1. Auth check must come first
   if (!isAuthenticated) {
-    return <Login onLogin={() => setIsAuthenticated(true)} />;
+    return <Login onLogin={handleLogin} />;
   }
 
+  // 2. If authenticated but no textbook selected, show landing page
   if (!selectedTextbookId) {
     return (
       <TextbookLanding
@@ -46,7 +44,7 @@ function App() {
     );
   }
 
-  // return <TextbookViewer />;
+  // 3. If authenticated and textbook selected, show viewer
   // pass the logout handler to textbook viewer as a prop so it can trigger logout when needed
   return (
     <TextbookViewer

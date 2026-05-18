@@ -42,28 +42,6 @@ app.get("/metrics", async (req, res) => {
     console.error("Error fetching metrics:", error);
     res.status(500).json({ error: "Failed to fetch metrics" });
   }
-
-  // for testing dashboard without backend, return mock data with some failure trends
-  // res.status(200).json({
-  //   service_up: false,
-  //   frontend_up: true,
-  //   backend_up: false,
-
-  //   api_requests_total: 0,
-  //   api_success_count: 0,
-  //   api_error_count: 1,
-
-  //   active_users: 0,
-  //   annotations_total: 0,
-  //   unauthorized_requests_count: 0,
-
-  //   textbook_load_time_ms: null,
-  //   annotation_load_time_ms: null,
-
-  //   app_version: "unknown",
-
-  //   ...fakeWeeklyRiskData,
-  // });
 });
 
 const PORT = 4000;

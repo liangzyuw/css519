@@ -7,9 +7,10 @@ const metrics = {
   api_success_count: 0,
   api_error_count: 0,
 
-  active_users: 5,
+  active_users: 1,
 
   unauthorized_requests_count: 0,
+  failed_login_count: 0,
 
   textbook_load_time_ms: null,
   annotation_load_time_ms: null,
