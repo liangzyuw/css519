@@ -181,12 +181,34 @@ export default function App() {
           <div className="metric-grid">
             <MetricCard title="Unauthorized" value={metrics.unauthorized_requests_count} />
             <MetricCard title="Failed Logins" value={metrics.failed_login_count} />
-            <MetricCard title="Unknown Requests" value="0" />
+            {/* <MetricCard title="Unknown Requests" value="0" /> */}
           </div>
         </div>
 
-        {/* Early Alert Failure Trends */}
+        {/* Weekly Login Success Trends */}
         <div className="card wide-card">
+          <h3>Weekly Logins</h3>
+          <p className="card-description">
+            These trends represent future monitoring for student and instructor logins (or sessions).
+          </p>
+
+          <div className="charts-grid">
+            <WeeklyBarChart
+              title="Student Logins/Sessions by Weekday"
+              data={metrics.student_logins_week || []}
+              warningThreshold={5}
+            />
+
+            <WeeklyBarChart
+              title="Instructor Logins/Sessions by Weekday"
+              data={metrics.instructor_logins_week || []}
+              warningThreshold={5}
+            />
+          </div>
+        </div>
+        
+        {/* Early Alert Failure Trends */}
+        {/* <div className="card wide-card">
           <h3>Early Alert: Weekly Failure Trends</h3>
           <p className="card-description">
             These trends represent future monitoring for annotation lookup
@@ -206,7 +228,7 @@ export default function App() {
               warningThreshold={3}
             />
           </div>
-        </div>
+        </div> */}
 
         {/* Deployment */}
         <div className="card">

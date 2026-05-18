@@ -6,7 +6,6 @@ backend/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-ToDo.txt
 
 # Environment variables
 **/.env
@@ -27,3 +26,6 @@ ToDo.txt
 
 # Optional (if you add later)
 coverage/
+
+# Runtime metrics data
+backend/data/metrics.json

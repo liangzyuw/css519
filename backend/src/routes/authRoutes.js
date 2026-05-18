@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { users } = require("../models/credentials");
-const { incrementMetric } = require("../models/metricsStore");
+const { incrementMetric, incrementWeeklyLogin } = require("../models/metricsStore");
 
 const SECRET = process.env.JWT_SECRET || "dev_secret_key";
 if (!SECRET) {
@@ -26,6 +26,8 @@ router.post("/auth/login", (req, res) => {
 
     return res.status(401).json({ message: "Invalid credentials" });
   }
+
+  incrementWeeklyLogin(user.role);
 
   // fake token
   // const token = Buffer.from(`${user.id}:${user.email}`).toString("base64");
