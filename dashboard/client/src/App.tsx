@@ -169,7 +169,7 @@ export default function App() {
         <div className="card">
           <h3>Usage Metrics</h3>
           <div className="metric-grid">
-            <MetricCard title="Active" value={metrics.active_users} />
+            <MetricCard title="Active Users" value={metrics.active_users} />
             <MetricCard title="Annotations" value={metrics.annotations_total} />
           </div>
         </div>

@@ -1,11 +1,24 @@
 import { useEffect, useState } from "react";
-import { getSections, getAnnotations, getChaptersByTextbookId } from "../api/api";
+import {
+  getSections,
+  getAnnotations,
+  getChaptersByTextbookId,
+  getTextbookById,
+} from "../api/api";
 import AnnotationPanel from "./AnnotationPanel";
 import AnnotationMarker from "./AnnotationMarker";
 
 interface TextbookViewerProps {
+  textbookId: string;
+  onBack: () => void;
   onLogout: () => void;
 }
+
+type Textbook = {
+  id: string;
+  title: string;
+  author: string;
+};
 
 type Chapter = {
   id: string;
@@ -21,18 +34,20 @@ type Section = {
   content: string;
 };
 
-export default function TextbookViewer({ onLogout }: TextbookViewerProps) {
+export default function TextbookViewer({ textbookId, onBack, onLogout }: TextbookViewerProps) {
+  const [textbook, setTextbook] = useState<Textbook | null>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
   const [selectedAnnotations, setSelectedAnnotations] = useState<any[]>([]);
   const [selectedChapterId, setSelectedChapterId] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  const textbookId = "tb1";
+  // const textbookId = "tb1";
 
   useEffect(() => {
+    loadTextbook();
     loadChapters();
-  }, []);
+  }, [textbookId]);
 
   useEffect(() => {
     if (selectedChapterId) {
@@ -40,8 +55,23 @@ export default function TextbookViewer({ onLogout }: TextbookViewerProps) {
     }
   }, [selectedChapterId]);
 
+  const loadTextbook = async () => {
+    try {
+      const data = await getTextbookById(textbookId);
+      setTextbook(data);
+    } catch (err) {
+      console.error("Failed to load textbook:", err);
+      setTextbook(null);
+    }
+  };
+
   const loadChapters = async () => {
     try {
+      setLoading(true);
+      setSelectedAnnotations([]);
+      setSections([]);
+      setSelectedChapterId("");
+
       const chapterData = await getChaptersByTextbookId(textbookId);
 
       setChapters(chapterData);
@@ -52,6 +82,8 @@ export default function TextbookViewer({ onLogout }: TextbookViewerProps) {
     } catch (err) {
       console.error("Failed to load chapters:", err);
       setChapters([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,9 +102,9 @@ export default function TextbookViewer({ onLogout }: TextbookViewerProps) {
     }
   };
 
-  const handleChapterChange = (chapterId: string) => {
-    setSelectedChapterId(chapterId);
-  };
+  // const handleChapterChange = (chapterId: string) => {
+  //   setSelectedChapterId(chapterId);
+  // };
 
   const handleMarkerClick = async (sectionId: string) => {
     console.log("Clicked section:", sectionId);
@@ -91,15 +123,29 @@ export default function TextbookViewer({ onLogout }: TextbookViewerProps) {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Left Sidebar */}
-      <div className="w-64 p-4 border-r border-gray-200 bg-white flex flex-col">
-        <h2 className="text-lg font-bold mb-4">Product</h2>
+      <div className="w-72 p-4 border-r border-gray-200 bg-white flex flex-col">
+        <button
+          onClick={onBack}
+          className="text-left text-blue-600 hover:text-blue-800 mb-4"
+        >
+          ← Back to textbooks
+        </button>
+
+        <div className="mb-6">
+          <h2 className="text-lg font-bold text-gray-900">
+            {textbook?.title || "Textbook"}
+          </h2>
+          {textbook && (
+            <p className="text-sm text-gray-500">By {textbook.author}</p>
+          )}
+        </div>
 
         <div className="mb-6">
           <h3 className="text-sm font-semibold text-gray-500 mb-2">
             Chapters
           </h3>
 
-          {chapters.length === 0 && (
+          {chapters.length === 0 && !loading && (
             <p className="text-sm text-gray-400">No chapters found.</p>
           )}
 
@@ -107,7 +153,7 @@ export default function TextbookViewer({ onLogout }: TextbookViewerProps) {
             {chapters.map((chapter) => (
               <button
                 key={chapter.id}
-                onClick={() => handleChapterChange(chapter.id)}
+                onClick={() => setSelectedChapterId(chapter.id)}
                 className={`w-full text-left px-3 py-2 rounded transition-colors ${
                   selectedChapterId === chapter.id
                     ? "bg-blue-100 text-blue-700 font-semibold"
@@ -131,7 +177,7 @@ export default function TextbookViewer({ onLogout }: TextbookViewerProps) {
       {/* Content */}
       <div className="flex-1 p-8 overflow-y-auto">
         {loading && (
-          <p className="text-gray-500">Loading chapter content...</p>
+          <p className="text-gray-500">Loading textbook content...</p>
         )}
 
         {!loading && sections.length === 0 && (

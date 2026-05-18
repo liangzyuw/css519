@@ -1,3 +1,11 @@
+function getTextbooks(textbooks) {
+  return textbooks; 
+}
+
+function getTextbookById(textbooks, textbookId) {
+  return textbooks.find((textbook) => textbook.id === textbookId) || null;
+}
+
 function getSectionsByChapterId(sections, chapterId) {
   return sections.filter((section) => section.chapter_id === chapterId);
 }
@@ -17,6 +25,8 @@ function getChaptersByTextbookId(chapters, textbookId) {
 }
 
 module.exports = {
+  getTextbooks,
+  getTextbookById,
   getSectionsByChapterId,
   getSectionById,
   getTextbookSections,

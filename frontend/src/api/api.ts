@@ -40,6 +40,17 @@ export const reportClientMetric = async (name: string, value: number) => {
   }
 };
 
+// textbook functions
+export const getTextbooks = async () => {
+  const res = await API.get("/textbooks");
+  return res.data;
+};
+
+export const getTextbookById = async (textbookId: string) => {
+  const res = await API.get(`/textbooks/${textbookId}`);
+  return res.data;
+};
+
 export const getChaptersByTextbookId = async (textbookId: string) => {
   const res = await API.get(`/textbooks/${textbookId}/chapters`);
   return res.data;

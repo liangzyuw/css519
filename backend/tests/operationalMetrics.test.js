@@ -47,7 +47,7 @@ describe("Operational metrics", () => {
       .post("/api/annotations")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        content_id: "sec1",
+        content_id: "tb1-sec1",
         content_type: "section",
         author_id: "user_2",
         body: "This is a test annotation.",

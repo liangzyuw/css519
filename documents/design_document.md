@@ -167,7 +167,7 @@ To test creating an annotation on POSTMAN,
 POST: http://localhost:3000/api/annotations
 body:   
 {
-  "content_id": "sec1",
+  "content_id": "tb1-sec1",
   "content_type": "section",
   "author_id": "user_1",
   "body": "This is a test annotation from Postman",
