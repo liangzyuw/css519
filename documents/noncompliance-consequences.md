@@ -145,5 +145,9 @@ https://www.ada.gov/resources/web-guidance/
 
 https://www.tandfonline.com/doi/full/10.1080/0361526X.2019.1589893
 
+https://www.copyright.gov/title17/92chap5.html
+
+https://www.justice.gov/archives/opa/blog/justice-departments-final-rule-improve-web-and-mobile-app-access-people-disabilities
+
 
 

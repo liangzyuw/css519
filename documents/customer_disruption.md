@@ -239,7 +239,7 @@ The operational excellence dashboard helps maintainers understand the state of t
 
 ---
 
-### 6.3 Slow System Performance
+### 5.3 Slow System Performance
 
 #### Description
 

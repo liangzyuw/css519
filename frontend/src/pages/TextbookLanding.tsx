@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { getTextbooks } from "../api/api";
 
+import TextbookRightsPage from "./TextbookRightsPage";
+
 type Textbook = {
   id: string;
   title: string;
   author: string;
+  copyright?: string;
+  license?: string;
+  rights?: string;
 };
 
 interface TextbookLandingProps {
@@ -16,8 +21,10 @@ export default function TextbookLanding({
   onSelectTextbook,
   onLogout,
 }: TextbookLandingProps) {
+  // states
   const [textbooks, setTextbooks] = useState<Textbook[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showRightsPage, setShowRightsPage] = useState(false);
 
   useEffect(() => {
     loadTextbooks();
@@ -35,6 +42,15 @@ export default function TextbookLanding({
     }
   };
 
+  if (showRightsPage) {
+    return (
+      <TextbookRightsPage
+        textbooks={textbooks}
+        onBack={() => setShowRightsPage(false)}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white border-b px-8 py-4 flex items-center justify-between">
@@ -45,12 +61,21 @@ export default function TextbookLanding({
           </p>
         </div>
 
-        <button
-          onClick={onLogout}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors"
-        >
-          Log Out
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setShowRightsPage(true)}
+            className="bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded transition-colors"
+          >
+            Licensing & Rights
+          </button>
+
+          <button
+            onClick={onLogout}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-colors"
+          >
+            Log Out
+          </button>
+        </div>
       </header>
 
       <main className="p-8">

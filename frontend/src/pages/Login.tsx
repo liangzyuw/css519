@@ -17,8 +17,22 @@ export default function Login({ onLogin }: any) {
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       onLogin();
-    } catch (err) {
-      setError("Invalid credentials");
+    } catch (err: any) {
+
+      // if the error is too many requests
+      if (err.response?.status === 429) {
+        const retryAfter = err.response.data?.retry_after_seconds;
+
+        setError(
+          retryAfter
+            ? `Too many login attempts. Try again in ${retryAfter} seconds.`
+            : "Too many login attempts. Please try again later."
+        );
+      } else if (err.response?.status === 401) {
+        setError("Invalid credentials");
+      } else {
+        setError("Login failed. Please try again.");
+      }
     }
   };
 

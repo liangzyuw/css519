@@ -164,10 +164,10 @@ Schools and instructors need confidence that course materials are used lawfully 
 
 
 ## 6. References
-https://studentprivacy.ed.gov/resources/protecting-student-privacy-while-using-online-educational-services-requirements-and-best
-
-https://corehighered.com/en/blog/navigating-compliance-in-higher-education-technology
+https://studentprivacy.ed.gov/ferpa
 
 https://www.ada.gov/resources/small-entity-compliance-guide/
+
+https://www.copyright.gov/about/resources-education.html
 
 https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa

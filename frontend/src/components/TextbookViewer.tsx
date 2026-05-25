@@ -41,6 +41,7 @@ export default function TextbookViewer({ textbookId, onBack, onLogout }: Textboo
   const [selectedAnnotations, setSelectedAnnotations] = useState<any[]>([]);
   const [selectedChapterId, setSelectedChapterId] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [enhancedMarkers, setEnhancedMarkers] = useState(false);
 
   // const textbookId = "tb1";
 
@@ -166,6 +167,24 @@ export default function TextbookViewer({ textbookId, onBack, onLogout }: Textboo
           </div>
         </div>
 
+        <div className="mt-4 border-t pt-4">
+          <button
+            onClick={() => setEnhancedMarkers((prev) => !prev)}
+            className={`w-full px-3 py-2 rounded text-left transition-colors ${
+              enhancedMarkers
+                ? "bg-yellow-300 text-black font-semibold border border-black"
+                : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+            }`}
+            aria-pressed={enhancedMarkers}
+          >
+            {enhancedMarkers ? "Enhanced markers: On" : "Enhanced markers: Off"}
+          </button>
+
+          <p className="text-xs text-gray-500 mt-2">
+            Makes annotation markers larger and higher contrast.
+          </p>
+        </div>
+
         <button
           onClick={onLogout}
           className="mt-auto bg-red-500 hover:bg-red-600 text-white p-2 rounded transition-colors"
@@ -200,6 +219,8 @@ export default function TextbookViewer({ textbookId, onBack, onLogout }: Textboo
                 {section.content}
                 <AnnotationMarker
                   onClick={() => handleMarkerClick(section.id)}
+                  label={`View annotations for ${section.title}`}
+                  enhanced={enhancedMarkers}
                 />
               </p>
             </div>
