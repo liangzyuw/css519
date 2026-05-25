@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 const { users } = require("../models/credentials");
 
-const SECRET = process.env.JWT_SECRET || "dev_secret_key";
+// const SECRET = process.env.JWT_SECRET || "dev_secret_key";
 
 // function: authMiddleware
 // This middleware function serves as a gatekeeper for protected routes in the backend API.
@@ -25,7 +25,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     // verify the token using the same secret key that was used to sign it during login
-    const decoded = jwt.verify(token, SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     // decoded contains { id, role } based on how it signed the token in authRoutes.js
 
     const user = users.find((u) => u.id === decoded.id);
@@ -34,6 +34,7 @@ const authMiddleware = (req, res, next) => {
     }
 
     req.user = user; // attach user to request
+    // req.user = decoded;
 
     next();
   } catch (err) {
