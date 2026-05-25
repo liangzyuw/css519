@@ -29,7 +29,7 @@ echo "Running security tests..."
 STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
   -X POST "$BASE_URL/auth/login" \
   -H "Content-Type: application/json" \
-  -d '{"email":"invalidstudent@example.com","password":"password123"}')
+  -d '{"email":"invalidstudent@example.com","password":"12345"}')
 
 check_status "Test 1: Invalid email" "401" "$STATUS"
 
@@ -53,7 +53,7 @@ check_status "Test 3: POST annotation without login" "401" "$STATUS"
 LOGIN_RESPONSE=$(curl -s \
   -X POST "$BASE_URL/auth/login" \
   -H "Content-Type: application/json" \
-  -d '{"email":"student@example.com","password":"password123"}')
+  -d '{"email":"student@example.com","password":"12345"}')
 
 echo "Student login response: $LOGIN_RESPONSE"
 

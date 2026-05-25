@@ -18,7 +18,7 @@ describe("Authentication API", () => {
       .post("/api/auth/login")
       .send({
         email: "teacher@example.com",
-        password: "teach123",
+        password: "67890",
       });
 
     expect(res.statusCode).toBe(200);

@@ -7,7 +7,7 @@ Test scripts are found in /test_scripts
 #### Request - POST /auth/login | Expect: 401 Unauthorized
 Try to log in with unrecognized email:   
     Email: invalidstudent@example.com  
-    Password: password123
+    Password: 12345
 
 ### Test 2: Wrong password
 #### Request - POST /auth/login | Expect: 401 Unauthorized
@@ -29,8 +29,8 @@ POST raw json:
 ### Test 4: Login as student
 #### Request - POST /auth/login | Expect: 200 OK
 Try to log in with test email and password in /backend/src/models/credentials.js:   
-    Email: invalidstudent@example.com  
-    Password: password123
+    Email: student@example.com  
+    Password: 12345
 
 ### Test 5: Student tries to POST annotations
 #### Request - POST /annotations | Expect: 403 Forbidden
@@ -49,7 +49,7 @@ POST raw json:
 #### Request - POST /auth/login | Expect: 200 OK
 Try to log in with unrecognized email:   
     Email: teacher@example.com  
-    Password: teach123
+    Password: 67890
 
 ### Test 7: Instructor tries to POST annotations
 #### Request - POST /auth/login | Expect: 201 Created
