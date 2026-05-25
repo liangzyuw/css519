@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const { users } = require("../models/credentials");
 const { incrementMetric, incrementWeeklyLogin } = require("../models/metricsStore");
 
+const loginRateLimiter = require("../middleware/loginRateLimiter");
+
 const SECRET = process.env.JWT_SECRET || "dev_secret_key";
 if (!SECRET) {
   throw new Error("JWT_SECRET is not configured");
@@ -12,7 +14,7 @@ if (!SECRET) {
 // console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
 
 // POST /auth/login
-router.post("/auth/login", (req, res) => {
+router.post("/auth/login", loginRateLimiter, (req, res) => {
   const { email, password } = req.body;
 
   const user = users.find(
@@ -24,7 +26,9 @@ router.post("/auth/login", (req, res) => {
     incrementMetric("failed_login_count");
     incrementMetric("unauthorized_requests_count");
 
-    return res.status(401).json({ message: "Invalid credentials" });
+    return res.status(401).json({ 
+      message: "Invalid credentials"
+    });
   }
 
   incrementWeeklyLogin(user.role);

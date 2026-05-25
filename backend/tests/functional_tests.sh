@@ -28,7 +28,7 @@ echo "Running functional tests..."
 INSTRUCTOR_TOKEN=$(curl -s \
   -X POST "$BASE_URL/auth/login" \
   -H "Content-Type: application/json" \
-  -d '{"email":"teacher@example.com","password":"teach123"}' \
+  -d '{"email":"teacher@example.com","password":"67890"}' \
   | jq -r '.token')
 
 if [ "$INSTRUCTOR_TOKEN" = "null" ] || [ -z "$INSTRUCTOR_TOKEN" ]; then

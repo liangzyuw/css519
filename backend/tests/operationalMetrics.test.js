@@ -37,7 +37,7 @@ describe("Operational metrics", () => {
       .post("/api/auth/login")
       .send({
         email: "teacher@example.com",
-        password: "teach123",
+        password: "67890",
       });
 
     expect(loginRes.statusCode).toBe(200);

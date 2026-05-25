@@ -9,16 +9,24 @@ export default function AnnotationPanel({
   annotations: Annotation[];
 }) {
   return (
-    <div className="w-80 border-l p-4 bg-gray-50 h-full overflow-y-auto">
+    <aside
+      className="w-80 border-l p-4 bg-gray-50 h-full overflow-y-auto"
+      aria-label="Annotation panel"
+    >
       <h2 className="font-bold mb-4">Annotations</h2>
 
-      {annotations.length === 0 && <p>No annotations</p>}
+      {annotations.length === 0 && (
+        <p className="text-gray-500">No annotations selected.</p>
+      )}
 
       {annotations.map((a) => (
-        <div key={a.id} className="mb-3 p-2 bg-white shadow rounded">
-          {a.body}
-        </div>
+        <article
+          key={a.id}
+          className="mb-3 p-3 bg-white shadow rounded border border-gray-200"
+        >
+          <p className="text-gray-800 leading-relaxed">{a.body}</p>
+        </article>
       ))}
-    </div>
+    </aside>
   );
 }

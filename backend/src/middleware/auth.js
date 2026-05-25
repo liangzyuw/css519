@@ -2,6 +2,8 @@
 const jwt = require("jsonwebtoken");
 const { users } = require("../models/credentials");
 
+// const SECRET = process.env.JWT_SECRET || "dev_secret_key";
+
 // function: authMiddleware
 // This middleware function serves as a gatekeeper for protected routes in the backend API.
 // It checks for the presence of a valid authentication token in the request headers, verifies it, 

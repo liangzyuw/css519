@@ -16,6 +16,7 @@ const defaultMetrics = {
 
   unauthorized_requests_count: 0,
   failed_login_count: 0,
+  rate_limited_requests: 0,
 
   textbook_load_time_ms: null,
   annotation_load_time_ms: null,

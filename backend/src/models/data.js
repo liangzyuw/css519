@@ -12,11 +12,19 @@ const textbooks = [
     id: "tb1",
     title: "Advanced Mathematics",
     author: "Andrew Math",
+    copyright: "© 2026 Andrew Math. All rights reserved.",
+    license: "Mock educational use license",
+    rights:
+      "This mock textbook is provided for classroom demonstration purposes only. Redistribution, resale, or commercial use is not permitted.",
   },
   {
     id: "tb2",
     title: "Chemistry 101",
     author: "Darren Bean",
+    copyright: "© 2026 Darren Bean. All rights reserved.",
+    license: "Mock educational use license",
+    rights:
+      "This mock textbook is provided for classroom demonstration purposes only. Content may be viewed within the CoffeeJelly platform but may not be redistributed.",
   },
 ];
 

@@ -7,7 +7,7 @@ echo "Expected: 200 OK with token"
 INSTRUCTOR_TOKEN=$(curl -s \
   -X POST "$BASE_URL/auth/login" \
   -H "Content-Type: application/json" \
-  -d '{"email":"teacher@example.com","password":"teach123"}' \
+  -d '{"email":"teacher@example.com","password":"67890"}' \
   | jq -r '.token')
 
 echo "Instructor token: $INSTRUCTOR_TOKEN"

@@ -115,7 +115,6 @@ export default function App() {
   return (
     <div className="container">
       <h2>CoffeeJelly Dashboard</h2>
-      <h2 className="subtitle">Real-time Metrics and Service Health for CoffeeJelly, the educational textbook-annotation platform.</h2>
 
       {/* OLD VERSION <p className="text-sm text-gray-500 mb-4"> Last updated: {new Date().toLocaleTimeString()} </p> */}
       <p className="last-updated">Last updated: {lastUpdated}</p>
@@ -181,7 +180,7 @@ export default function App() {
           <div className="metric-grid">
             <MetricCard title="Unauthorized" value={metrics.unauthorized_requests_count} />
             <MetricCard title="Failed Logins" value={metrics.failed_login_count} />
-            {/* <MetricCard title="Unknown Requests" value="0" /> */}
+            <MetricCard title="Rate Limited Requests" value={metrics.rate_limited_requests} />
           </div>
         </div>
 

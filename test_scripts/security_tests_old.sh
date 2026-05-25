@@ -7,7 +7,7 @@ echo "Expected: 401 Unauthorized"
 curl -s -o /dev/null -w "%{http_code}\n" \
   -X POST "$BASE_URL/auth/login" \
   -H "Content-Type: application/json" \
-  -d '{"email":"invalidstudent@example.com","password":"password123"}'
+  -d '{"email":"invalidstudent@example.com","password":"12345"}'
 
 echo "---- Test 2: Wrong password ----"
 echo "Expected: 401 Unauthorized"
@@ -28,7 +28,7 @@ echo "Expected: 200 OK with token"
 STUDENT_TOKEN=$(curl -s \
   -X POST "$BASE_URL/auth/login" \
   -H "Content-Type: application/json" \
-  -d '{"email":"student@example.com","password":"password123"}' \
+  -d '{"email":"student@example.com","password":"12345"}' \
   | jq -r '.token')
 
 echo "Student token: $STUDENT_TOKEN"
