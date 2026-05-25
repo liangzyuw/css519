@@ -76,7 +76,9 @@ Schools, instructors, and students need confidence that educational activity is 
 - Avoid using student data for unrelated purposes
 
 ## 3. Compliance Requirement - Accessibility / ADA
-Educational platforms should be accessible to users with disabilities. ADA.gov explains that websites and mobile apps may need to be accessible so people with disabilities can access goods, services, programs, or activities. The Department of Justice has also issued rules and guidance addressing web and mobile accessibility requirements for public entities and accessibility expectations for web content. 
+Educational platforms should be accessible to users with disabilities. ADA.gov explains that websites and mobile apps may need to be accessible so people with disabilities can access goods, services, programs, or activities.  
+
+The Department of Justice has also issued rules and guidance addressing web and mobile accessibility requirements for public entities and accessibility expectations for web content. The ADA section of the U.S. Department of Justice states, "The ADA has always required state and local governments to provide individuals with disabilities with effective communication, reasonable modifications, and an equal opportunity to participate in or benefit from government services, programs, and activities."
 
 ### 3.1 Product should protect equal access to:
 - Login pages
@@ -94,6 +96,9 @@ This would concern:
 Accessibility failures may create legal exposure, institutional complaints, reputational damage, and exclusion of students who rely on assistive technology.  
 
 Schools and instructors need tools that can be used by all students, not only students without disabilities.
+
+According to ADA: 
+"For example, individuals who are blind may use a screen reader to deliver visual information on a website or mobile app as speech. A state or local government might post an image on its website that provides information to the public. If the website does not include text describing the image (sometimes called “alternative text” or “alt text”), individuals who are blind and who use screen readers may have no way of knowing what is in the image because a screen reader cannot “read” an image."
 
 Design suggestions for future consideration:
 - Support keyboard navigation
@@ -165,5 +170,4 @@ https://corehighered.com/en/blog/navigating-compliance-in-higher-education-techn
 
 https://www.ada.gov/resources/small-entity-compliance-guide/
 
-https://elearningindustry.com/the-compliance-checklist-must-have-features-for-every-online-learning-platform
-
+https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa
