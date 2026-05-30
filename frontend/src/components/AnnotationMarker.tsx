@@ -3,7 +3,7 @@ export default function AnnotationMarker({
   label = "View annotation for this section",
   enhanced = false,
 }: {
-  onClick: () => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   label?: string;
   enhanced?: boolean;
 }) {

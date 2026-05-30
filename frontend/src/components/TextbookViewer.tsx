@@ -4,7 +4,11 @@ import {
   getAnnotations,
   getChaptersByTextbookId,
   getTextbookById,
+  createComment,
+  getComments,
 } from "../api/api";
+
+import StudentCommentMarker from "./StudentCommentMarker";
 import AnnotationPanel from "./AnnotationPanel";
 import AnnotationMarker from "./AnnotationMarker";
 
@@ -34,6 +38,15 @@ type Section = {
   content: string;
 };
 
+type StudentComment = {
+  id: string;
+  content_id: string;
+  content_type: string;
+  author_id: string;
+  body: string;
+  created_at: string;
+};
+
 export default function TextbookViewer({ textbookId, onBack, onLogout }: TextbookViewerProps) {
   const [textbook, setTextbook] = useState<Textbook | null>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
@@ -43,7 +56,11 @@ export default function TextbookViewer({ textbookId, onBack, onLogout }: Textboo
   const [loading, setLoading] = useState(false);
   const [enhancedMarkers, setEnhancedMarkers] = useState(false);
 
-  // const textbookId = "tb1";
+  // states for comment functionality
+  const [requestMode, setRequestMode] = useState(false);
+  const [activeCommentSectionId, setActiveCommentSectionId] = useState<string | null>(null);
+  const [commentText, setCommentText] = useState("");
+  const [commentsBySection, setCommentsBySection] = useState<Record<string, StudentComment[]>>({});
 
   useEffect(() => {
     loadTextbook();
@@ -95,6 +112,8 @@ export default function TextbookViewer({ textbookId, onBack, onLogout }: Textboo
 
       const sectionData = await getSections(chapterId);
       setSections(sectionData);
+
+      await loadCommentsForSections(sectionData);
     } catch (err) {
       console.error("Failed to load chapter sections:", err);
       setSections([]);
@@ -102,10 +121,6 @@ export default function TextbookViewer({ textbookId, onBack, onLogout }: Textboo
       setLoading(false);
     }
   };
-
-  // const handleChapterChange = (chapterId: string) => {
-  //   setSelectedChapterId(chapterId);
-  // };
 
   const handleMarkerClick = async (sectionId: string) => {
     console.log("Clicked section:", sectionId);
@@ -117,9 +132,62 @@ export default function TextbookViewer({ textbookId, onBack, onLogout }: Textboo
     setSelectedAnnotations(annotations);
   };
 
-  // const handleLogOut = () => {
-  //   onLogout();
-  // }
+  const getCurrentUserId = () => {
+    const storedUser = localStorage.getItem("user");
+
+    if (!storedUser) {
+      return "unknown_user";
+    }
+
+    try {
+      const user = JSON.parse(storedUser);
+      return user.id || "unknown_user";
+    } catch {
+      return "unknown_user";
+    }
+  };
+
+  const loadCommentsForSections = async (sectionData: Section[]) => {
+    const nextCommentsBySection: Record<string, StudentComment[]> = {};
+
+    for (const section of sectionData) {
+      const comments = await getComments(section.id);
+      nextCommentsBySection[section.id] = comments;
+    }
+
+    setCommentsBySection(nextCommentsBySection);
+  };
+
+  const handleSectionClickForComment = (sectionId: string) => {
+    if (!requestMode) return;
+
+    setActiveCommentSectionId(sectionId);
+    setCommentText("");
+  };
+
+  const handleSubmitComment = async () => {
+    if (!activeCommentSectionId || commentText.trim() === "") {
+      return;
+    }
+
+    const newComment = await createComment({
+      content_id: activeCommentSectionId,
+      content_type: "section",
+      author_id: getCurrentUserId(),
+      body: commentText.trim(),
+    });
+
+    setCommentsBySection((prev) => ({
+      ...prev,
+      [activeCommentSectionId]: [
+        ...(prev[activeCommentSectionId] || []),
+        newComment,
+      ],
+    }));
+
+    setCommentText("");
+    setActiveCommentSectionId(null);
+  };
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -185,6 +253,28 @@ export default function TextbookViewer({ textbookId, onBack, onLogout }: Textboo
           </p>
         </div>
 
+        <div className="mt-4 border-t pt-4">
+          <button
+            onClick={() => {
+              setRequestMode((prev) => !prev);
+              setActiveCommentSectionId(null);
+              setCommentText("");
+            }}
+            className={`w-full px-3 py-2 rounded text-left transition-colors ${
+              requestMode
+                ? "bg-purple-200 text-purple-900 font-semibold border border-purple-400"
+                : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+            }`}
+            aria-pressed={requestMode}
+          >
+            {requestMode ? "Request annotation mode: On" : "Request annotation mode: Off"}
+          </button>
+
+          <p className="text-xs text-gray-500 mt-2">
+            Turn this on, then click a section to request instructor clarification.
+          </p>
+        </div>
+
         <button
           onClick={onLogout}
           className="mt-auto bg-red-500 hover:bg-red-600 text-white p-2 rounded transition-colors"
@@ -209,7 +299,12 @@ export default function TextbookViewer({ textbookId, onBack, onLogout }: Textboo
           sections.map((section) => (
             <div
               key={section.id}
-              className="mb-8 bg-white p-6 rounded shadow-sm border"
+              onClick={() => handleSectionClickForComment(section.id)}
+              className={`mb-8 bg-white p-6 rounded shadow-sm border ${
+                requestMode
+                  ? "cursor-crosshair hover:border-purple-400 hover:bg-purple-50"
+                  : ""
+              }`}
             >
               <h1 className="text-2xl font-bold mb-2">
                 {section.title}
@@ -217,12 +312,58 @@ export default function TextbookViewer({ textbookId, onBack, onLogout }: Textboo
 
               <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                 {section.content}
+
                 <AnnotationMarker
-                  onClick={() => handleMarkerClick(section.id)}
+                  onClick={(event?: any) => {
+                    event?.stopPropagation?.();
+                    handleMarkerClick(section.id);
+                  }}
                   label={`View annotations for ${section.title}`}
                   enhanced={enhancedMarkers}
                 />
+
+                <StudentCommentMarker
+                  comments={commentsBySection[section.id] || []}
+                />
               </p>
+
+              {activeCommentSectionId === section.id && (
+                <div
+                  className="mt-4 p-4 border border-purple-300 bg-purple-50 rounded"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <h3 className="font-semibold text-purple-900 mb-2">
+                    Request an instructor annotation
+                  </h3>
+
+                  <textarea
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    className="w-full border rounded p-2 mb-3"
+                    rows={3}
+                    placeholder="Write what you want the instructor to clarify..."
+                  />
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleSubmitComment}
+                      className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded"
+                    >
+                      Submit Request
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setActiveCommentSectionId(null);
+                        setCommentText("");
+                      }}
+                      className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
       </div>
