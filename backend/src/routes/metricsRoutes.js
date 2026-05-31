@@ -7,6 +7,7 @@ const {
 } = require("../models/metricsStore");
 
 const { annotations, textbooks } = require("../models/data");
+const { getCommentCount } = require("../models/commentStore");
 
 // Dashboard reads this
 router.get("/metrics", (req, res) => {
@@ -17,6 +18,7 @@ router.get("/metrics", (req, res) => {
     
     textbooks_total: textbooks.length,
     annotations_total: annotations.length,     // count current in-memory annotation store
+    comments_total: getCommentCount()
   });
 });
 

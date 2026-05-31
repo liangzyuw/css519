@@ -171,6 +171,7 @@ export default function App() {
             <MetricCard title="Active Users" value={metrics.active_users} />
             <MetricCard title="Textbooks" value={metrics.textbooks_total} />
             <MetricCard title="Annotations" value={metrics.annotations_total} />
+            <MetricCard title="Existing Comments" value={metrics.comments_total ?? 0} />
           </div>
         </div>
 

@@ -44,4 +44,8 @@ router.get("/annotations", (req, res) => {
   res.json(result);
 });
 
+router.get("/annotations/all", (req, res) => {
+  res.json(annotations);
+});
+
 module.exports = router;

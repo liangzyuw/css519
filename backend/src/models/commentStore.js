@@ -15,6 +15,11 @@ function ensureCommentsFileExists() {
   }
 }
 
+function getCommentCount() {
+  const comments = readComments();
+  return comments.length;
+}
+
 function readComments() {
   ensureCommentsFileExists();
 
@@ -64,10 +69,15 @@ function createComment({ content_id, content_type, author_id, body }) {
 
   return newComment;
 }
+function getAllComments() {
+  return readComments();
+}
 
 module.exports = {
   readComments,
   writeComments,
   getCommentsByContent,
   createComment,
+  getCommentCount,
+  getAllComments
 };

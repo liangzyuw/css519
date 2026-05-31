@@ -4,7 +4,8 @@ const router = express.Router();
 const {
   getCommentsByContent,
   createComment,
-} = require("../services/commentStore");
+  getAllComments
+} = require("../models/commentStore");
 
 // POST /api/comments
 router.post("/comments", (req, res) => {
@@ -39,6 +40,11 @@ router.get("/comments", (req, res) => {
   const result = getCommentsByContent(content_id, content_type);
 
   res.json(result);
+});
+
+router.get("/comments/all", (req, res) => {
+  const comments = getAllComments();
+  res.json(comments);
 });
 
 module.exports = router;
