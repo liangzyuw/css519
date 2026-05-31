@@ -164,6 +164,31 @@ export default function App() {
           </div>
         </div>
 
+        {/* Recent Security Events */}
+        <div className="card wide-card">
+          <h3>Recent Security Events</h3>
+          <p className="card-description">
+            Latest unauthorized access attempts and security-relevant activity.
+          </p>
+
+          {(!metrics.recent_security_events ||
+            metrics.recent_security_events.length === 0) && (
+            <p className="gray">No recent security events.</p>
+          )}
+
+          {metrics.recent_security_events?.map((event: any) => (
+            <div key={event.id} className="security-event">
+              <strong>{event.type}</strong>
+              <div className="small-text">
+                {new Date(event.timestamp).toLocaleString()}
+              </div>
+              <pre className="event-details">
+                {JSON.stringify(event.details, null, 2)}
+              </pre>
+            </div>
+          ))}
+        </div>
+
         {/* Users */}
         <div className="card">
           <h3>Usage Metrics</h3>
