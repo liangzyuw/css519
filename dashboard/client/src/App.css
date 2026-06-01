@@ -238,3 +238,25 @@ h1 {
   font-size: 12px;
   color: #6b7280;
 }
+
+.security-event {
+  background: #fff7ed;
+  border: 1px solid #fdba74;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.small-text {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.event-details {
+  background: #f8fafc;
+  padding: 8px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 12px;
+}

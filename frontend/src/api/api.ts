@@ -80,6 +80,34 @@ export const getAnnotations = async (contentId: string) => {
   return res.data;
 };
 
+export const getAllAnnotations = async () => {
+  const res = await API.get("/annotations/all");
+  return res.data;
+};
+
+export const createComment = async (comment: {
+  content_id: string;
+  content_type: string;
+  author_id: string;
+  body: string;
+}) => {
+  const res = await API.post("/comments", comment);
+  return res.data;
+};
+
+export const getComments = async (contentId: string) => {
+  const res = await API.get(
+    `/comments?content_type=section&content_id=${contentId}`
+  );
+
+  return res.data;
+};
+
+export const getAllComments = async () => {
+  const res = await API.get("/comments/all");
+  return res.data;
+};
+
 export default API;
 
 // attach token to requests

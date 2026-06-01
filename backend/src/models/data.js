@@ -140,10 +140,14 @@ const annotations = [
   }
 ];
 
+// annotation requests left by student users
+const comments = [];
+
 module.exports = {
   textbooks,
   chapters,
   sections,
   problems,
   annotations,
+  comments,
 };

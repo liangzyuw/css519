@@ -21,6 +21,8 @@ const defaultMetrics = {
   textbook_load_time_ms: null,
   annotation_load_time_ms: null,
 
+  recent_security_events: [],
+
   student_logins_week: [
     { day: "Mon", value: 0 },
     { day: "Tue", value: 0 },
@@ -138,6 +140,20 @@ function incrementWeeklyLogin(role) {
   }
 }
 
+function recordSecurityEvent(type, details = {}) {
+  const event = {
+    id: `event_${Date.now()}`,
+    type,
+    details,
+    timestamp: new Date().toISOString(),
+  };
+
+  metrics.recent_security_events.unshift(event);
+
+  // keep only the latest 10 events
+  metrics.recent_security_events = metrics.recent_security_events.slice(0, 10);
+}
+
 function getMetrics() {
   return metrics;
 }
@@ -147,5 +163,6 @@ module.exports = {
   recordMetric,
   incrementMetric,
   incrementWeeklyLogin,
+  recordSecurityEvent,
   getMetrics,
 };

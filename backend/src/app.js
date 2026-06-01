@@ -48,10 +48,12 @@ const annotationRoutes = require("./routes/annotationRoutes");
 const contentRoutes = require("./routes/contentRoutes");
 const authRoutes = require("./routes/authRoutes");
 const metricsRoutes = require("./routes/metricsRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 
 app.use("/api", annotationRoutes);
 app.use("/api", contentRoutes);
 app.use("/api", authRoutes);
+app.use("/api", commentRoutes);
 
 // expose metrics at /metrics not /api/metrics so dashboard can poll it without CORS issues
 app.use(metricsRoutes);
